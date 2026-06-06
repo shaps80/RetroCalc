@@ -68,8 +68,12 @@ struct SegmentShape: Shape {
         }
 
         switch segment {
-        case .top, .center, .bottom:
-            return horizontalPath(in: segmentRect, bevel: bevel)
+        case .top:
+            return topHorizontalPath(in: segmentRect, bevel: bevel)
+        case .center:
+            return centerHorizontalPath(in: segmentRect, bevel: bevel)
+        case .bottom:
+            return bottomHorizontalPath(in: segmentRect, bevel: bevel)
         case .topLeft, .bottomLeft:
             return leftVerticalPath(in: segmentRect, bevel: bevel)
         case .topRight, .bottomRight:
@@ -77,7 +81,17 @@ struct SegmentShape: Shape {
         }
     }
 
-    private func horizontalPath(in rect: CGRect, bevel: CGFloat) -> Path {
+    private func topHorizontalPath(in rect: CGRect, bevel: CGFloat) -> Path {
+        Path { path in
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX - bevel, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX + bevel, y: rect.maxY))
+            path.closeSubpath()
+        }
+    }
+
+    private func centerHorizontalPath(in rect: CGRect, bevel: CGFloat) -> Path {
         Path { path in
             path.move(to: CGPoint(x: rect.minX + bevel, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX - bevel, y: rect.minY))
@@ -89,14 +103,22 @@ struct SegmentShape: Shape {
         }
     }
 
-    private func leftVerticalPath(in rect: CGRect, bevel: CGFloat) -> Path {
+    private func bottomHorizontalPath(in rect: CGRect, bevel: CGFloat) -> Path {
         Path { path in
             path.move(to: CGPoint(x: rect.minX + bevel, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX - bevel, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.closeSubpath()
+        }
+    }
+
+    private func leftVerticalPath(in rect: CGRect, bevel: CGFloat) -> Path {
+        Path { path in
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + bevel))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - bevel))
-            path.addLine(to: CGPoint(x: rect.minX + bevel, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - bevel))
-            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + bevel))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
             path.closeSubpath()
         }
     }
@@ -104,10 +126,8 @@ struct SegmentShape: Shape {
     private func rightVerticalPath(in rect: CGRect, bevel: CGFloat) -> Path {
         Path { path in
             path.move(to: CGPoint(x: rect.minX, y: rect.minY + bevel))
-            path.addLine(to: CGPoint(x: rect.maxX - bevel, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + bevel))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - bevel))
-            path.addLine(to: CGPoint(x: rect.maxX - bevel, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - bevel))
             path.closeSubpath()
         }
