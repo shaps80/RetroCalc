@@ -18,6 +18,8 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.shaps.RetroCalc
         PRODUCT_NAME: RetroCalc
+        DEVELOPMENT_TEAM: V2CWYL9AN8
+        CODE_SIGN_STYLE: Automatic
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_FILE: RetroCalcApp/Info.plist
         SWIFT_VERSION: "5.9"
