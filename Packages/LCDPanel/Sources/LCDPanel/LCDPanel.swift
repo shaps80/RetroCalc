@@ -11,17 +11,17 @@ import SwiftUI
 /// LCDPanel(value: value)
 /// ```
 ///
-/// This first rendering slice shows the first digit in the value as a
-/// seven-segment LCD digit.
+/// This first rendering slice shows the first entered digit in the value as a
+/// seven-segment LCD digit. An empty value leaves every segment inactive.
 public struct LCDPanel: View {
     private let value: Value
 
-    /// Creates an LCD panel displaying zero.
+    /// Creates an LCD panel with no entered digit.
     public init() {
         self.init(value: Value())
     }
 
-    /// Creates an LCD panel displaying the first digit from `value`.
+    /// Creates an LCD panel displaying the first entered digit from `value`.
     ///
     /// - Parameter value: The calculator entry value to render.
     public init(value: Value) {

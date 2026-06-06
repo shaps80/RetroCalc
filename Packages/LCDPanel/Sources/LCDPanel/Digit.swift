@@ -3,8 +3,8 @@ import SwiftUI
 struct Digit: View {
     private let activeSegments: Set<Segment>
 
-    init(_ value: Int) {
-        activeSegments = Self.segments(for: value)
+    init(_ value: Int?) {
+        activeSegments = value.map(Self.segments(for:)) ?? []
     }
 
     var body: some View {

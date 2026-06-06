@@ -2,11 +2,22 @@ import XCTest
 @testable import LCDPanel
 
 final class LCDPanelValueTests: XCTestCase {
-    func testValueStartsAtZero() {
+    func testValueStartsEmptyWithZeroDecimalValue() {
         let value = LCDPanel.Value()
 
         XCTAssertEqual(value.decimal, Decimal(0))
+        XCTAssertEqual(value.entries, [])
+        XCTAssertNil(value.firstDigit)
+    }
+
+    func testAppendingZeroRecordsEnteredZero() {
+        var value = LCDPanel.Value()
+
+        value.append(0)
+
+        XCTAssertEqual(value.decimal, Decimal(0))
         XCTAssertEqual(value.entries, [.digit(0)])
+        XCTAssertEqual(value.firstDigit, 0)
     }
 
     func testAppendUnsignedIntegerDigits() {
@@ -72,7 +83,7 @@ final class LCDPanelValueTests: XCTestCase {
         XCTAssertEqual(value.entries, [.digit(0), .decimalSeparator, .digit(0), .digit(5)])
     }
 
-    func testRemoveLastRemovesDigitsAndReturnsToZero() {
+    func testRemoveLastRemovesDigitsAndReturnsToEmptyEntry() {
         var value = LCDPanel.Value()
 
         value.append(12)
@@ -82,11 +93,11 @@ final class LCDPanelValueTests: XCTestCase {
 
         value.removeLast()
         XCTAssertEqual(value.decimal, Decimal(0))
-        XCTAssertEqual(value.entries, [.digit(0)])
+        XCTAssertEqual(value.entries, [])
 
         value.removeLast()
         XCTAssertEqual(value.decimal, Decimal(0))
-        XCTAssertEqual(value.entries, [.digit(0)])
+        XCTAssertEqual(value.entries, [])
     }
 
     func testRemoveLastRemovesFractionalDigitsBeforeDecimalSeparator() {
