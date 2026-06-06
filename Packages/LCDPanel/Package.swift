@@ -15,6 +15,10 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "LCDPanel")
+        .target(name: "LCDPanel"),
+        .testTarget(
+            name: "LCDPanelTests",
+            dependencies: ["LCDPanel"]
+        )
     ]
 )
