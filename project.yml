@@ -1,0 +1,25 @@
+name: RetroCalc
+options:
+  bundleIdPrefix: com.shaps
+  deploymentTarget:
+    iOS: "17.0"
+packages:
+  LEDDisplay:
+    path: Packages/LEDDisplay
+targets:
+  RetroCalc:
+    type: application
+    platform: iOS
+    sources:
+      - RetroCalcApp
+    dependencies:
+      - package: LEDDisplay
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.shaps.RetroCalc
+        PRODUCT_NAME: RetroCalc
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_FILE: RetroCalcApp/Info.plist
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: "NO"
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: "NO"
