@@ -15,7 +15,12 @@ public extension LCDPanel {
     /// value.decimal // 1.0
     /// ```
     struct Value {
-        private var text = "0"
+        internal enum Entry: Equatable {
+            case digit(UInt8)
+            case decimalSeparator
+        }
+
+        internal private(set) var entries: [Entry] = [.digit(0)]
 
         /// Creates a value initialized to zero.
         public init() {}
@@ -24,36 +29,28 @@ public extension LCDPanel {
         ///
         /// - Parameter value: The unsigned integer whose digits should be appended.
         public mutating func append(_ value: UInt) {
-            let digits = String(value)
-
-            if text == "0" {
-                text = digits == "0" ? "0" : digits
-            } else {
-                text += digits
+            for digit in String(value).compactMap(\.wholeNumberValue) {
+                appendDigit(UInt8(digit))
             }
         }
 
         /// Appends a decimal separator if the value does not already contain one.
         public mutating func appendDecimal() {
-            guard !text.contains(".") else { return }
+            guard !entries.contains(.decimalSeparator) else { return }
 
-            text += "."
+            entries.append(.decimalSeparator)
         }
 
         /// Removes the last entered digit or decimal separator.
         ///
         /// Removing past the final digit leaves the value at zero.
         public mutating func removeLast() {
-            guard text.count > 1 else {
-                text = "0"
+            guard entries.count > 1 else {
+                entries = [.digit(0)]
                 return
             }
 
-            text.removeLast()
-
-            if text.isEmpty {
-                text = "0"
-            }
+            entries.removeLast()
         }
 
         /// The numeric value represented by the entry buffer.
@@ -62,7 +59,30 @@ public extension LCDPanel {
         }
 
         internal var firstDigit: Int {
-            text.first?.wholeNumberValue ?? 0
+            guard case let .digit(digit) = entries.first else { return 0 }
+
+            return Int(digit)
+        }
+
+        private var text: String {
+            entries.map { entry in
+                switch entry {
+                case let .digit(digit):
+                    return String(digit)
+                case .decimalSeparator:
+                    return "."
+                }
+            }.joined()
+        }
+
+        private mutating func appendDigit(_ digit: UInt8) {
+            guard digit <= 9 else { return }
+
+            if entries == [.digit(0)] {
+                entries = digit == 0 ? [.digit(0)] : [.digit(digit)]
+            } else {
+                entries.append(.digit(digit))
+            }
         }
     }
 }
