@@ -5,7 +5,7 @@ import SwiftUI
 struct RetroCalcApp: App {
     var body: some Scene {
         WindowGroup {
-            LCDPanelView()
+            LCDPanel()
         }
     }
 }

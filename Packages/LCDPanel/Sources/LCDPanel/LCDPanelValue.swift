@@ -61,7 +61,7 @@ public extension LCDPanel {
             Decimal(string: text) ?? Decimal(0)
         }
 
-        var firstDigit: Int {
+        internal var firstDigit: Int {
             text.first?.wholeNumberValue ?? 0
         }
     }
