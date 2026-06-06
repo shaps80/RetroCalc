@@ -1,12 +1,11 @@
-import LEDDisplay
+import LCDPanel
 import SwiftUI
 
 @main
 struct RetroCalcApp: App {
     var body: some Scene {
         WindowGroup {
-            LEDDisplayView()
+            LCDPanelView()
         }
     }
 }
-

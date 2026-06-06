@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D0000010000000000000001 /* RetroCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0000020000000000000001 /* RetroCalcApp.swift */; };
-		2D0000030000000000000001 /* LEDDisplay in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0000040000000000000001 /* LEDDisplay */; };
+		2D0000030000000000000001 /* LCDPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0000040000000000000001 /* LCDPanel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,7 +22,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D0000030000000000000001 /* LEDDisplay in Frameworks */,
+				2D0000030000000000000001 /* LCDPanel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,7 @@
 			);
 			name = RetroCalc;
 			packageProductDependencies = (
-				2D0000040000000000000001 /* LEDDisplay */,
+				2D0000040000000000000001 /* LCDPanel */,
 			);
 			productName = RetroCalc;
 			productReference = 2D0000060000000000000001 /* RetroCalc.app */;
@@ -110,7 +110,7 @@
 			mainGroup = 2D0000080000000000000001;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				2D0000120000000000000001 /* XCLocalSwiftPackageReference "Packages/LEDDisplay" */,
+				2D0000120000000000000001 /* XCLocalSwiftPackageReference "Packages/LCDPanel" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2D00000B0000000000000001 /* Products */;
@@ -340,17 +340,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		2D0000120000000000000001 /* XCLocalSwiftPackageReference "Packages/LEDDisplay" */ = {
+		2D0000120000000000000001 /* XCLocalSwiftPackageReference "Packages/LCDPanel" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/LEDDisplay;
+			relativePath = Packages/LCDPanel;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2D0000040000000000000001 /* LEDDisplay */ = {
+		2D0000040000000000000001 /* LCDPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2D0000120000000000000001 /* XCLocalSwiftPackageReference "Packages/LEDDisplay" */;
-			productName = LEDDisplay;
+			package = 2D0000120000000000000001 /* XCLocalSwiftPackageReference "Packages/LCDPanel" */;
+			productName = LCDPanel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

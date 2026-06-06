@@ -4,8 +4,8 @@ options:
   deploymentTarget:
     iOS: "17.0"
 packages:
-  LEDDisplay:
-    path: Packages/LEDDisplay
+  LCDPanel:
+    path: Packages/LCDPanel
 targets:
   RetroCalc:
     type: application
@@ -13,7 +13,7 @@ targets:
     sources:
       - RetroCalcApp
     dependencies:
-      - package: LEDDisplay
+      - package: LCDPanel
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.shaps.RetroCalc

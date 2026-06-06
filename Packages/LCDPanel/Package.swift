@@ -3,18 +3,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "LEDDisplay",
+    name: "LCDPanel",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v17)
     ],
     products: [
         .library(
-            name: "LEDDisplay",
-            targets: ["LEDDisplay"]
+            name: "LCDPanel",
+            targets: ["LCDPanel"]
         )
     ],
     targets: [
-        .target(name: "LEDDisplay")
+        .target(name: "LCDPanel")
     ]
 )
