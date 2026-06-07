@@ -1,19 +1,17 @@
 import SwiftUI
 
 struct SegmentLayout: Layout {
-    static let gapRatio: CGFloat = 0.12
-
     struct Metrics {
         let thickness: CGFloat
         let inset: CGFloat
-        let segmentGap: CGFloat
-        let middleY: CGFloat
         let topY: CGFloat
+        let centerY: CGFloat
         let bottomY: CGFloat
-        let verticalTopY: CGFloat
-        let verticalBottomY: CGFloat
-        let topVerticalHeight: CGFloat
-        let bottomVerticalHeight: CGFloat
+        let leftX: CGFloat
+        let rightX: CGFloat
+        let horizontalWidth: CGFloat
+        let upperVerticalHeight: CGFloat
+        let lowerVerticalHeight: CGFloat
     }
 
     func sizeThatFits(
@@ -47,103 +45,82 @@ struct SegmentLayout: Layout {
     static func metrics(in rect: CGRect) -> Metrics {
         let thickness = min(rect.width, rect.height) * 0.16
         let inset = thickness * 0.45
-        let middleY = rect.midY - thickness / 2
         let topY = rect.minY + inset
+        let centerY = rect.midY - thickness / 2
         let bottomY = rect.maxY - inset - thickness
-        let centerY = middleY
-        let segmentGap = thickness * Self.gapRatio
-        let bottomOverlap = thickness * 0.85
-        let centerOverlap = thickness * 0.25
-        let verticalTopY = topY
-        let verticalBottomY = centerY + thickness - centerOverlap
+        let leftX = rect.minX + inset
+        let rightX = rect.maxX - inset - thickness
 
         return Metrics(
             thickness: thickness,
             inset: inset,
-            segmentGap: segmentGap,
-            middleY: middleY,
             topY: topY,
+            centerY: centerY,
             bottomY: bottomY,
-            verticalTopY: verticalTopY,
-            verticalBottomY: verticalBottomY,
-            topVerticalHeight: max(0, centerY - verticalTopY + centerOverlap),
-            bottomVerticalHeight: max(0, bottomY - verticalBottomY + bottomOverlap)
+            leftX: leftX,
+            rightX: rightX,
+            horizontalWidth: max(0, rightX - leftX + thickness),
+            upperVerticalHeight: max(0, centerY - topY + thickness),
+            lowerVerticalHeight: max(0, bottomY - centerY + thickness)
         )
     }
 
     static func frame(for segment: Segment, in rect: CGRect, metrics: Metrics) -> CGRect {
         switch segment {
         case .top:
-            return horizontalFrame(in: rect, y: metrics.topY, metrics: metrics)
+            return horizontalFrame(y: metrics.topY, metrics: metrics)
         case .center:
-            return horizontalFrame(in: rect, y: metrics.middleY, metrics: metrics)
+            return horizontalFrame(y: metrics.centerY, metrics: metrics)
         case .bottom:
-            return horizontalFrame(in: rect, y: metrics.bottomY, metrics: metrics)
+            return horizontalFrame(y: metrics.bottomY, metrics: metrics)
         case .topLeft:
-            return leftVerticalFrame(
-                in: rect,
-                y: metrics.verticalTopY,
-                height: metrics.topVerticalHeight,
-                xOffset: metrics.segmentGap,
+            return verticalFrame(
+                x: metrics.leftX,
+                y: metrics.topY,
+                height: metrics.upperVerticalHeight,
                 metrics: metrics
             )
         case .bottomLeft:
-            return leftVerticalFrame(
-                in: rect,
-                y: metrics.verticalBottomY,
-                height: metrics.bottomVerticalHeight,
-                xOffset: metrics.segmentGap,
+            return verticalFrame(
+                x: metrics.leftX,
+                y: metrics.centerY,
+                height: metrics.lowerVerticalHeight,
                 metrics: metrics
             )
         case .topRight:
-            return rightVerticalFrame(
-                in: rect,
-                y: metrics.verticalTopY,
-                height: metrics.topVerticalHeight,
+            return verticalFrame(
+                x: metrics.rightX,
+                y: metrics.topY,
+                height: metrics.upperVerticalHeight,
                 metrics: metrics
             )
         case .bottomRight:
-            return rightVerticalFrame(
-                in: rect,
-                y: metrics.verticalBottomY,
-                height: metrics.bottomVerticalHeight,
+            return verticalFrame(
+                x: metrics.rightX,
+                y: metrics.centerY,
+                height: metrics.lowerVerticalHeight,
                 metrics: metrics
             )
         }
     }
 
-    private static func horizontalFrame(in rect: CGRect, y: CGFloat, metrics: Metrics) -> CGRect {
+    private static func horizontalFrame(y: CGFloat, metrics: Metrics) -> CGRect {
         CGRect(
-            x: rect.minX + metrics.inset + metrics.thickness * 0.45,
+            x: metrics.leftX,
             y: y,
-            width: rect.width - (metrics.inset * 2) - metrics.thickness * 0.9,
+            width: metrics.horizontalWidth,
             height: metrics.thickness
         )
     }
 
-    private static func leftVerticalFrame(
-        in rect: CGRect,
-        y: CGFloat,
-        height: CGFloat,
-        xOffset: CGFloat,
-        metrics: Metrics
-    ) -> CGRect {
-        CGRect(
-            x: rect.minX + metrics.inset - xOffset,
-            y: y,
-            width: metrics.thickness,
-            height: height
-        )
-    }
-
-    private static func rightVerticalFrame(
-        in rect: CGRect,
+    private static func verticalFrame(
+        x: CGFloat,
         y: CGFloat,
         height: CGFloat,
         metrics: Metrics
     ) -> CGRect {
         CGRect(
-            x: rect.maxX - metrics.inset - metrics.thickness,
+            x: x,
             y: y,
             width: metrics.thickness,
             height: height
