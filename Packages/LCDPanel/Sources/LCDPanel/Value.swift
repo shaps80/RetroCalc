@@ -3,8 +3,8 @@ import Foundation
 public extension LCDPanel {
     /// A calculator entry buffer that preserves editing intent.
     ///
-    /// `Value` starts with an empty entry buffer, normalizes integer leading
-    /// zeros once entry begins, and preserves fractional zeros during entry:
+    /// `Value` starts with an empty entry buffer and preserves the entered text,
+    /// including leading integer zeros and fractional zeros:
     ///
     /// ```swift
     /// var value = LCDPanel.Value()

@@ -13,101 +13,108 @@ struct KeyPad: View {
             verticalSpacing: spacing
         ) {
             GridRow {
-                CalcButton("C") {
+                Key("C") {
                     value.clear()
                 }
 
-                CalcButton(systemImage: "plusminus") {
+                Key(systemImage: "plusminus") {
 
                 }
+                .disabled(true)
 
-                CalcButton(systemImage: "percent") {
+                Key(systemImage: "percent") {
 
                 }
+                .disabled(true)
 
-                CalcButton(systemImage: "divide") {
+                Key(systemImage: "divide") {
 
                 }
                 .tint(.tintTeal)
+                .disabled(true)
             }
             .tint(.tintYellow)
 
             GridRow {
-                CalcButton(7) {
+                Key(7) {
                     value.append(7)
                 }
 
-                CalcButton(8) {
+                Key(8) {
                     value.append(8)
                 }
 
-                CalcButton(9) {
+                Key(9) {
                     value.append(9)
                 }
 
-                CalcButton(systemImage: "multiply") {
+                Key(systemImage: "multiply") {
 
                 }
                 .tint(.tintTeal)
+                .disabled(true)
             }
 
             GridRow {
-                CalcButton(4) {
+                Key(4) {
                     value.append(4)
                 }
 
-                CalcButton(5) {
+                Key(5) {
                     value.append(5)
                 }
 
-                CalcButton(6) {
+                Key(6) {
                     value.append(6)
                 }
 
-                CalcButton(systemImage: "minus") {
+                Key(systemImage: "minus") {
 
                 }
                 .tint(.tintTeal)
+                .disabled(true)
             }
 
             GridRow {
-                CalcButton(1) {
+                Key(1) {
                     value.append(1)
                 }
 
-                CalcButton(2) {
+                Key(2) {
                     value.append(2)
                 }
 
-                CalcButton(3) {
+                Key(3) {
                     value.append(3)
                 }
 
-                CalcButton(systemImage: "plus") {
+                Key(systemImage: "plus") {
 
                 }
                 .tint(.tintTeal)
+                .disabled(true)
             }
 
             GridRow {
-                CalcButton(systemImage: "chevron.down.2") {
+                Key(systemImage: "chevron.down.2") {
                     openWords()
                 }
                 .tint(.secondary)
                 .imageScale(.small)
 
-                CalcButton(0) {
+                Key(0) {
                     value.append(0)
                 }
 
-                CalcButton(".") {
+                Key(".") {
                     value.appendDecimal()
                 }
 
-                CalcButton(systemImage: "equal") {
+                Key(systemImage: "equal") {
 
                 }
                 .tint(.tintTeal)
+                .disabled(true)
             }
         }
         .tint(.fg)
@@ -123,4 +130,3 @@ struct KeyPad: View {
             .padding(15)
     }
 }
-

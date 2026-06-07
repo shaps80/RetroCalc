@@ -10,8 +10,11 @@
 		2D0000010000000000000001 /* RetroCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0000020000000000000001 /* RetroCalcApp.swift */; };
 		2D0000030000000000000001 /* LCDPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0000040000000000000001 /* LCDPanel */; };
 		2D0000200000000000000001 /* Calculator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D0000210000000000000001 /* Calculator.ttf */; };
-		2D0000300000000000000001 /* CalculatorWordsUltimate.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2D0000310000000000000001 /* CalculatorWordsUltimate.txt */; };
-		54111C892FD5C73B00BCDEBF /* CalcButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C882FD5C73B00BCDEBF /* CalcButton.swift */; };
+		2D0000300000000000000001 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2D0000310000000000000001 /* words.txt */; };
+		2D0000400000000000000001 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0000410000000000000001 /* CalculatorView.swift */; };
+		2D0000420000000000000001 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0000430000000000000001 /* Word.swift */; };
+		2D0000440000000000000001 /* WordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0000450000000000000001 /* WordsList.swift */; };
+		54111C892FD5C73B00BCDEBF /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C882FD5C73B00BCDEBF /* Key.swift */; };
 		54111C8B2FD5C7CF00BCDEBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54111C8A2FD5C7CF00BCDEBF /* Assets.xcassets */; };
 		54111C8D2FD5DA4900BCDEBF /* KeyPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */; };
 		54111C8F2FD5DCAD00BCDEBF /* OpenWordsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C8E2FD5DCAD00BCDEBF /* OpenWordsAction.swift */; };
@@ -22,8 +25,11 @@
 		2D0000050000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D0000060000000000000001 /* RetroCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetroCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D0000210000000000000001 /* Calculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calculator.ttf; sourceTree = "<group>"; };
-		2D0000310000000000000001 /* CalculatorWordsUltimate.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CalculatorWordsUltimate.txt; sourceTree = "<group>"; };
-		54111C882FD5C73B00BCDEBF /* CalcButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcButton.swift; sourceTree = "<group>"; };
+		2D0000310000000000000001 /* words.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
+		2D0000410000000000000001 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		2D0000430000000000000001 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		2D0000450000000000000001 /* WordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsList.swift; sourceTree = "<group>"; };
+		54111C882FD5C73B00BCDEBF /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		54111C8A2FD5C7CF00BCDEBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPad.swift; sourceTree = "<group>"; };
 		54111C8E2FD5DCAD00BCDEBF /* OpenWordsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWordsAction.swift; sourceTree = "<group>"; };
@@ -45,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				2D0000090000000000000001 /* RetroCalcApp */,
-				2D00000A0000000000000001 /* Packages */,
 				2D00000B0000000000000001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,23 +58,14 @@
 		2D0000090000000000000001 /* RetroCalcApp */ = {
 			isa = PBXGroup;
 			children = (
+				2D0000220000000000000001 /* Resources */,
+				54111C912FD5F17E00BCDEBF /* Calculator */,
+				54111C902FD5F17600BCDEBF /* Words */,
 				2D0000020000000000000001 /* RetroCalcApp.swift */,
-				54111C882FD5C73B00BCDEBF /* CalcButton.swift */,
-				54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */,
-				54111C8E2FD5DCAD00BCDEBF /* OpenWordsAction.swift */,
 				2D0000050000000000000001 /* Info.plist */,
-				2D0000310000000000000001 /* CalculatorWordsUltimate.txt */,
-				2D0000220000000000000001 /* Fonts */,
 				54111C8A2FD5C7CF00BCDEBF /* Assets.xcassets */,
 			);
 			path = RetroCalcApp;
-			sourceTree = "<group>";
-		};
-		2D00000A0000000000000001 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Packages;
 			sourceTree = "<group>";
 		};
 		2D00000B0000000000000001 /* Products */ = {
@@ -80,12 +76,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2D0000220000000000000001 /* Fonts */ = {
+		2D0000220000000000000001 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				2D0000210000000000000001 /* Calculator.ttf */,
+				2D0000310000000000000001 /* words.txt */,
 			);
-			path = Fonts;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		54111C902FD5F17600BCDEBF /* Words */ = {
+			isa = PBXGroup;
+			children = (
+				2D0000430000000000000001 /* Word.swift */,
+				2D0000450000000000000001 /* WordsList.swift */,
+				54111C8E2FD5DCAD00BCDEBF /* OpenWordsAction.swift */,
+			);
+			path = Words;
+			sourceTree = "<group>";
+		};
+		54111C912FD5F17E00BCDEBF /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				2D0000410000000000000001 /* CalculatorView.swift */,
+				54111C882FD5C73B00BCDEBF /* Key.swift */,
+				54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */,
+			);
+			path = Calculator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,7 +172,7 @@
 			files = (
 				2D0000200000000000000001 /* Calculator.ttf in Resources */,
 				54111C8B2FD5C7CF00BCDEBF /* Assets.xcassets in Resources */,
-				2D0000300000000000000001 /* CalculatorWordsUltimate.txt in Resources */,
+				2D0000300000000000000001 /* words.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,8 +184,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D0000010000000000000001 /* RetroCalcApp.swift in Sources */,
-				54111C892FD5C73B00BCDEBF /* CalcButton.swift in Sources */,
+				2D0000400000000000000001 /* CalculatorView.swift in Sources */,
+				54111C892FD5C73B00BCDEBF /* Key.swift in Sources */,
 				54111C8D2FD5DA4900BCDEBF /* KeyPad.swift in Sources */,
+				2D0000420000000000000001 /* Word.swift in Sources */,
+				2D0000440000000000000001 /* WordsList.swift in Sources */,
 				54111C8F2FD5DCAD00BCDEBF /* OpenWordsAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

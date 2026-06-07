@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CalcButton<Content: View>: View {
+struct Key<Content: View>: View {
     @ViewBuilder var content: Content
     var action: () -> Void
 
@@ -16,7 +16,7 @@ struct CalcButton<Content: View>: View {
     }
 }
 
-extension CalcButton {
+extension Key {
     init(_ value: Int, action: @escaping () -> Void) where Content == Text {
         self.content = Text(value, format: .number)
         self.action = action
