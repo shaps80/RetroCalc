@@ -83,11 +83,21 @@ public struct CalculatorModel {
         let operand = expression[operandRange]
 
         if operand.isEmpty {
+            if let (operatorRange, operation) = binaryOperatorBeforeCurrentOperand(operandRange),
+               operation == .add || operation == .subtract {
+                expression.replaceSubrange(operatorRange, with: operation == .add ? "-" : "+")
+                activeText = expression
+                return
+            }
+
             expression.append("-")
         } else if operand == "-" {
             expression.removeSubrange(operandRange)
         } else if operand.hasPrefix("-") {
             expression.remove(at: operandRange.lowerBound)
+        } else if let (operatorRange, operation) = binaryOperatorBeforeCurrentOperand(operandRange),
+                  operation == .add || operation == .subtract {
+            expression.replaceSubrange(operatorRange, with: operation == .add ? "-" : "+")
         } else {
             expression.insert("-", at: operandRange.lowerBound)
         }
@@ -110,12 +120,6 @@ public struct CalculatorModel {
                 activeText = expression
             }
 
-            return
-        }
-
-        if operation == .subtract && isExpectingOperand {
-            expression.append(operation.displayText)
-            activeText = expression
             return
         }
 
@@ -222,8 +226,17 @@ public struct CalculatorModel {
         return isBinaryOperator(at: lastOperatorRange.lowerBound) ? lastOperatorRange : nil
     }
 
-    private var isExpectingOperand: Bool {
-        expression.isEmpty || lastBinaryOperatorRange != nil
+    private func binaryOperatorBeforeCurrentOperand(
+        _ operandRange: Range<String.Index>
+    ) -> (Range<String.Index>, Operator)? {
+        guard operandRange.lowerBound > expression.startIndex else { return nil }
+
+        let operatorIndex = expression.index(before: operandRange.lowerBound)
+        guard isBinaryOperator(at: operatorIndex),
+              let operation = Operator(displayText: expression[operatorIndex])
+        else { return nil }
+
+        return (operatorIndex..<expression.index(after: operatorIndex), operation)
     }
 
     private func isBinaryOperator(at index: String.Index) -> Bool {

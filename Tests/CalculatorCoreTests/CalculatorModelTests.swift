@@ -253,15 +253,29 @@ struct CalculatorModelTests {
     }
 
     @Test
-    func minusAfterOperatorStartsNegativeOperandAndEvaluatesProduct() {
+    func minusAfterOperatorReplacesPendingOperator() {
         var calculator = CalculatorModel()
 
-        enter("7*-2", into: &calculator)
-        #expect(calculator.activeText == "7*-2")
+        enter("6+-6", into: &calculator)
+
+        #expect(calculator.activeText == "6-6")
 
         calculator.evaluate()
-        #expect(calculator.activeText == "-14")
-        #expect(calculator.previousExpressionText == "7*-2")
+        #expect(calculator.activeText == "0")
+        #expect(calculator.previousExpressionText == "6-6")
+    }
+
+    @Test
+    func repeatedMinusAfterSubtractDoesNotAppendMoreMinusSigns() {
+        var calculator = CalculatorModel()
+
+        enter("6---3", into: &calculator)
+
+        #expect(calculator.activeText == "6-3")
+
+        calculator.evaluate()
+        #expect(calculator.activeText == "3")
+        #expect(calculator.previousExpressionText == "6-3")
     }
 
     @Test
@@ -310,6 +324,50 @@ struct CalculatorModelTests {
 
         calculator.toggleSign()
         #expect(calculator.activeText == "7*2")
+    }
+
+    @Test
+    func plusMinusAllowsNegativeSecondOperand() {
+        var calculator = CalculatorModel()
+
+        enter("6+6", into: &calculator)
+        calculator.toggleSign()
+
+        #expect(calculator.activeText == "6-6")
+
+        calculator.evaluate()
+        #expect(calculator.activeText == "0")
+        #expect(calculator.previousExpressionText == "6-6")
+    }
+
+    @Test
+    func plusMinusSimplifiesNegativeOperandAfterSubtraction() {
+        var calculator = CalculatorModel()
+
+        enter("6-3", into: &calculator)
+        calculator.toggleSign()
+
+        #expect(calculator.activeText == "6+3")
+
+        calculator.evaluate()
+        #expect(calculator.activeText == "9")
+        #expect(calculator.previousExpressionText == "6+3")
+    }
+
+    @Test
+    func backspaceUsesSimplifiedPlusMinusExpression() {
+        var calculator = CalculatorModel()
+
+        enter("6-3", into: &calculator)
+        calculator.toggleSign()
+        calculator.removeLast()
+        #expect(calculator.activeText == "6+")
+
+        calculator.removeLast()
+        #expect(calculator.activeText == "6")
+
+        calculator.removeLast()
+        #expect(calculator.activeText == "0")
     }
 
     @Test
@@ -396,9 +454,9 @@ struct CalculatorModelTests {
         #expect(calculator.previousExpressionText == "12÷3")
 
         calculator.clear()
-        enter("12*-", into: &calculator)
+        enter("12+", into: &calculator)
         calculator.removeLast()
-        enter("3", into: &calculator)
+        enter("*3", into: &calculator)
         calculator.evaluate()
 
         #expect(calculator.activeText == "36")
