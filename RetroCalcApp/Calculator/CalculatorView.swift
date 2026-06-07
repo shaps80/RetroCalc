@@ -18,7 +18,7 @@ struct CalculatorView: View {
                     previousExpressionText: calculator.previousExpressionText,
                     isPlaceholder: calculator.isEmpty
                 )
-                .frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottomTrailing)
+                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
 
                 KeyPad(calculator: $calculator)
             }
