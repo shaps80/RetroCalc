@@ -50,22 +50,31 @@ public struct LCDPanel: View {
     }
 
     public var body: some View {
-        VStack(alignment: .trailing, spacing: 6) {
-            if let previousExpressionText, !previousExpressionText.isEmpty {
-                Text(previousExpressionText)
-                    .multilineTextAlignment(.trailing)
-                    .opacity(0.45)
-                    .font(.custom("Calculator", size: 38))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.2)
-            }
-
+        ZStack(alignment: .bottomTrailing) {
             Text(activeText)
                 .multilineTextAlignment(.trailing)
                 .opacity(isPlaceholder ? 0.1 : 1)
                 .font(.custom("Calculator", size: 128))
                 .lineLimit(1)
                 .minimumScaleFactor(0.2)
+
+            if let previousExpressionDisplayText {
+                Text(previousExpressionDisplayText)
+                    .multilineTextAlignment(.trailing)
+                    .opacity(0.45)
+                    .font(.custom("Calculator", size: 38))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.2)
+                    .offset(y: -82)
+            }
         }
+    }
+
+    private var previousExpressionDisplayText: String? {
+        guard let text = previousExpressionText?.replacingOccurrences(of: "=", with: ""),
+              !text.isEmpty
+        else { return nil }
+
+        return text
     }
 }
