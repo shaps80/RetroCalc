@@ -1,53 +1,23 @@
 import SwiftUI
 
 struct Digit: View {
-    private let activeSegments: Set<Segment>
+    private let value: UInt8?
 
-    init(_ value: Int?) {
-        activeSegments = value.map(Self.segments(for:)) ?? []
+    init(_ value: UInt8?) {
+        self.value = value
     }
 
     var body: some View {
-        SegmentLayout {
-            ForEach(Segment.allCases, id: \.self) { segment in
-                SegmentView(segment: segment)
-                    .foregroundStyle(activeSegments.contains(segment) ? activeColor : inactiveColor)
+        ZStack {
+            Text("8")
+                .foregroundStyle(.quinary)
+
+            if let value {
+                Text(String(value))
+                    .foregroundStyle(.foreground)
             }
         }
-    }
-
-    private var activeColor: Color {
-        Color.black.opacity(0.78)
-    }
-
-    private var inactiveColor: Color {
-        Color.black.opacity(0.10)
-    }
-
-    private static func segments(for value: Int) -> Set<Segment> {
-        switch value {
-        case 0:
-            return [.topLeft, .top, .topRight, .bottomLeft, .bottom, .bottomRight]
-        case 1:
-            return [.topRight, .bottomRight]
-        case 2:
-            return [.top, .topRight, .center, .bottomLeft, .bottom]
-        case 3:
-            return [.top, .topRight, .center, .bottom, .bottomRight]
-        case 4:
-            return [.topLeft, .topRight, .center, .bottomRight]
-        case 5:
-            return [.topLeft, .top, .center, .bottom, .bottomRight]
-        case 6:
-            return [.topLeft, .top, .center, .bottomLeft, .bottom, .bottomRight]
-        case 7:
-            return [.top, .topRight, .bottomRight]
-        case 8:
-            return Set(Segment.allCases)
-        case 9:
-            return [.topLeft, .top, .topRight, .center, .bottom, .bottomRight]
-        default:
-            return []
-        }
+        .monospacedDigit()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

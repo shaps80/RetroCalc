@@ -25,6 +25,10 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Calculator.ttf</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>LSRequiresIPhoneOS</key>

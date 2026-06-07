@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		2D0000010000000000000001 /* RetroCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0000020000000000000001 /* RetroCalcApp.swift */; };
 		2D0000030000000000000001 /* LCDPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0000040000000000000001 /* LCDPanel */; };
+		2D0000200000000000000001 /* Calculator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D0000210000000000000001 /* Calculator.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2D0000020000000000000001 /* RetroCalcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetroCalcApp.swift; sourceTree = "<group>"; };
 		2D0000050000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D0000060000000000000001 /* RetroCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetroCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D0000210000000000000001 /* Calculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calculator.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,8 +45,17 @@
 			children = (
 				2D0000020000000000000001 /* RetroCalcApp.swift */,
 				2D0000050000000000000001 /* Info.plist */,
+				2D0000220000000000000001 /* Fonts */,
 			);
 			path = RetroCalcApp;
+			sourceTree = "<group>";
+		};
+		2D0000220000000000000001 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2D0000210000000000000001 /* Calculator.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		2D00000A0000000000000001 /* Packages */ = {
@@ -127,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D0000200000000000000001 /* Calculator.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
