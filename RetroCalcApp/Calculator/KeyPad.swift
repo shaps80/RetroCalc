@@ -13,6 +13,10 @@ struct KeyPad: View {
             verticalSpacing: spacing
         ) {
             GridRow {
+                Key(systemImage: "delete.left") {
+                    value.removeLast()
+                }
+
                 Key("C") {
                     value.clear()
                 }
@@ -20,18 +24,11 @@ struct KeyPad: View {
                 Key(systemImage: "plusminus") {
 
                 }
-                .disabled(true)
-
-                Key(systemImage: "percent") {
-
-                }
-                .disabled(true)
 
                 Key(systemImage: "divide") {
 
                 }
                 .tint(.tintTeal)
-                .disabled(true)
             }
             .tint(.tintYellow)
 
@@ -52,7 +49,6 @@ struct KeyPad: View {
 
                 }
                 .tint(.tintTeal)
-                .disabled(true)
             }
 
             GridRow {
@@ -72,7 +68,6 @@ struct KeyPad: View {
 
                 }
                 .tint(.tintTeal)
-                .disabled(true)
             }
 
             GridRow {
@@ -92,7 +87,6 @@ struct KeyPad: View {
 
                 }
                 .tint(.tintTeal)
-                .disabled(true)
             }
 
             GridRow {
@@ -114,7 +108,6 @@ struct KeyPad: View {
 
                 }
                 .tint(.tintTeal)
-                .disabled(true)
             }
         }
         .tint(.fg)
