@@ -8,29 +8,25 @@ struct CalculatorView: View {
     @State private var wordScrollPosition: String?
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Color.bg
-                .ignoresSafeArea()
-
-            VStack(spacing: 28) {
-                LCDPanel(
-                    activeText: calculator.activeText,
-                    previousExpressionText: calculator.previousExpressionText,
-                    isPlaceholder: calculator.isEmpty
-                )
-                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
-
-                KeyPad(calculator: $calculator)
+        VStack(alignment: .trailing, spacing: 28) {
+            LCDPanel(
+                activeText: calculator.activeText,
+                previousExpressionText: calculator.previousExpressionText,
+                isPlaceholder: calculator.isEmpty
+            ) {
+                calculator.restorePreviousExpression()
             }
-            .padding(15)
-            .openWords(isPresented: $isShowingWords) {
-                WordsList(
-                    searchText: $wordSearchText,
-                    scrollPosition: $wordScrollPosition
-                ) { word in
-                    calculator.replaceActiveInput(with: word.input)
-                    isShowingWords = false
-                }
+
+            KeyPad(calculator: $calculator)
+        }
+        .padding(15)
+        .openWords(isPresented: $isShowingWords) {
+            WordsList(
+                searchText: $wordSearchText,
+                scrollPosition: $wordScrollPosition
+            ) { word in
+                calculator.replaceActiveInput(with: word.input)
+                isShowingWords = false
             }
         }
     }

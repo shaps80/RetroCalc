@@ -150,6 +150,33 @@ struct CalculatorModelTests {
     }
 
     @Test
+    func restoringPreviousExpressionReplacesActiveExpression() {
+        var calculator = CalculatorModel()
+
+        enter("12+3", into: &calculator)
+        calculator.evaluate()
+        calculator.enterDigit(9)
+        calculator.restorePreviousExpression()
+
+        #expect(calculator.activeText == "12+3")
+        #expect(calculator.previousExpressionText == nil)
+    }
+
+    @Test
+    func restoringPreviousExpressionStartsFreshCalculation() {
+        var calculator = CalculatorModel()
+
+        enter("2+3", into: &calculator)
+        calculator.evaluate()
+        calculator.evaluate()
+        calculator.restorePreviousExpression()
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "8")
+        #expect(calculator.previousExpressionText == "5+3")
+    }
+
+    @Test
     func emptyEqualsIsNoOp() {
         var calculator = CalculatorModel()
 

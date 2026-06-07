@@ -18,6 +18,7 @@ public struct LCDPanel: View {
     private let activeText: String
     private let previousExpressionText: String?
     private let isPlaceholder: Bool
+    private let onPreviousExpressionTap: (() -> Void)?
 
     /// Creates an LCD panel with no entered digit.
     public init() {
@@ -42,11 +43,13 @@ public struct LCDPanel: View {
     public init(
         activeText: String,
         previousExpressionText: String? = nil,
-        isPlaceholder: Bool = false
+        isPlaceholder: Bool = false,
+        onPreviousExpressionTap: (() -> Void)? = nil
     ) {
         self.activeText = activeText
         self.previousExpressionText = previousExpressionText
         self.isPlaceholder = isPlaceholder
+        self.onPreviousExpressionTap = onPreviousExpressionTap
     }
 
     public var body: some View {
@@ -56,6 +59,10 @@ public struct LCDPanel: View {
                     .multilineTextAlignment(.trailing)
                     .foregroundStyle(.placeholder)
                     .font(.custom("Digital-7", size: 40))
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        onPreviousExpressionTap?()
+                    }
             }
 
             Text(activeText)

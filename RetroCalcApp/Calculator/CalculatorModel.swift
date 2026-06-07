@@ -37,6 +37,16 @@ public struct CalculatorModel {
         repeatedEqualsOperation = nil
     }
 
+    public mutating func restorePreviousExpression() {
+        guard let previousExpressionText, !previousExpressionText.isEmpty else { return }
+
+        expression = previousExpressionText
+        activeText = previousExpressionText
+        self.previousExpressionText = nil
+        hasCompletedEvaluation = false
+        repeatedEqualsOperation = nil
+    }
+
     public mutating func enterDigit(_ digit: UInt8) {
         guard digit <= 9 else { return }
 
