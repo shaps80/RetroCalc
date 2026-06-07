@@ -2,7 +2,7 @@ import LCDPanel
 import SwiftUI
 
 struct CalculatorView: View {
-    @State private var value = LCDPanel.Value()
+    @State private var calculator = CalculatorModel()
     @State private var isShowingWords = false
     @State private var wordSearchText = ""
     @State private var wordScrollPosition: String?
@@ -13,10 +13,14 @@ struct CalculatorView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 28) {
-                LCDPanel(value: value)
+                LCDPanel(
+                    activeText: calculator.activeText,
+                    previousExpressionText: calculator.previousExpressionText,
+                    isPlaceholder: calculator.isEmpty
+                )
                     .frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottomTrailing)
 
-                KeyPad(value: $value)
+                KeyPad(calculator: $calculator)
             }
             .padding(15)
             .openWords(isPresented: $isShowingWords) {
@@ -24,7 +28,7 @@ struct CalculatorView: View {
                     searchText: $wordSearchText,
                     scrollPosition: $wordScrollPosition
                 ) { word in
-                    value = LCDPanel.Value(inputText: word.input)
+                    calculator = CalculatorModel(inputText: word.input)
                     isShowingWords = false
                 }
             }

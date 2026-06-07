@@ -1,11 +1,10 @@
 import SwiftUI
-import LCDPanel
 
 struct KeyPad: View {
     @Environment(\.openWords) private var openWords
     
     private let spacing: CGFloat = 15
-    @Binding var value: LCDPanel.Value
+    @Binding var calculator: CalculatorModel
 
     var body: some View {
         Grid(
@@ -14,11 +13,11 @@ struct KeyPad: View {
         ) {
             GridRow {
                 Key(systemImage: "delete.left") {
-                    value.removeLast()
+                    calculator.removeLast()
                 }
 
                 Key("C") {
-                    value.clear()
+                    calculator.clear()
                 }
 
                 Key(systemImage: "plusminus") {
@@ -26,7 +25,7 @@ struct KeyPad: View {
                 }
 
                 Key(systemImage: "divide") {
-
+                    calculator.enterOperator(.divide)
                 }
                 .tint(.tintTeal)
             }
@@ -34,57 +33,57 @@ struct KeyPad: View {
 
             GridRow {
                 Key(7) {
-                    value.append(7)
+                    calculator.enterDigit(7)
                 }
 
                 Key(8) {
-                    value.append(8)
+                    calculator.enterDigit(8)
                 }
 
                 Key(9) {
-                    value.append(9)
+                    calculator.enterDigit(9)
                 }
 
                 Key(systemImage: "multiply") {
-
+                    calculator.enterOperator(.multiply)
                 }
                 .tint(.tintTeal)
             }
 
             GridRow {
                 Key(4) {
-                    value.append(4)
+                    calculator.enterDigit(4)
                 }
 
                 Key(5) {
-                    value.append(5)
+                    calculator.enterDigit(5)
                 }
 
                 Key(6) {
-                    value.append(6)
+                    calculator.enterDigit(6)
                 }
 
                 Key(systemImage: "minus") {
-
+                    calculator.enterOperator(.subtract)
                 }
                 .tint(.tintTeal)
             }
 
             GridRow {
                 Key(1) {
-                    value.append(1)
+                    calculator.enterDigit(1)
                 }
 
                 Key(2) {
-                    value.append(2)
+                    calculator.enterDigit(2)
                 }
 
                 Key(3) {
-                    value.append(3)
+                    calculator.enterDigit(3)
                 }
 
                 Key(systemImage: "plus") {
-
+                    calculator.enterOperator(.add)
                 }
                 .tint(.tintTeal)
             }
@@ -97,15 +96,15 @@ struct KeyPad: View {
                 .imageScale(.small)
 
                 Key(0) {
-                    value.append(0)
+                    calculator.enterDigit(0)
                 }
 
                 Key(".") {
-                    value.appendDecimal()
+                    calculator.enterDecimal()
                 }
 
                 Key(systemImage: "equal") {
-
+                    calculator.evaluate()
                 }
                 .tint(.tintTeal)
             }
@@ -119,7 +118,7 @@ struct KeyPad: View {
         Color.bg
             .ignoresSafeArea()
 
-        KeyPad(value: .constant(.init()))
+        KeyPad(calculator: .constant(.init()))
             .padding(15)
     }
 }

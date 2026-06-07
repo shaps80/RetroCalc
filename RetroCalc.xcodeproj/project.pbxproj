@@ -18,6 +18,7 @@
 		54111C8B2FD5C7CF00BCDEBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54111C8A2FD5C7CF00BCDEBF /* Assets.xcassets */; };
 		54111C8D2FD5DA4900BCDEBF /* KeyPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */; };
 		54111C8F2FD5DCAD00BCDEBF /* OpenWordsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C8E2FD5DCAD00BCDEBF /* OpenWordsAction.swift */; };
+		54111C932FD6200000BCDEBF /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54111C922FD6200000BCDEBF /* CalculatorModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		54111C8A2FD5C7CF00BCDEBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPad.swift; sourceTree = "<group>"; };
 		54111C8E2FD5DCAD00BCDEBF /* OpenWordsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWordsAction.swift; sourceTree = "<group>"; };
+		54111C922FD6200000BCDEBF /* CalculatorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				2D0000410000000000000001 /* CalculatorView.swift */,
+				54111C922FD6200000BCDEBF /* CalculatorModel.swift */,
 				54111C882FD5C73B00BCDEBF /* Key.swift */,
 				54111C8C2FD5DA4900BCDEBF /* KeyPad.swift */,
 			);
@@ -187,6 +190,7 @@
 			files = (
 				2D0000010000000000000001 /* RetroCalcApp.swift in Sources */,
 				2D0000400000000000000001 /* CalculatorView.swift in Sources */,
+				54111C932FD6200000BCDEBF /* CalculatorModel.swift in Sources */,
 				54111C892FD5C73B00BCDEBF /* Key.swift in Sources */,
 				54111C8D2FD5DA4900BCDEBF /* KeyPad.swift in Sources */,
 				2D0000420000000000000001 /* Word.swift in Sources */,
