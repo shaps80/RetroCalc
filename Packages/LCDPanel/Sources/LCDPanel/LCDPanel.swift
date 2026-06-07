@@ -50,24 +50,21 @@ public struct LCDPanel: View {
     }
 
     public var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            Text(activeText)
-                .multilineTextAlignment(.trailing)
-                .opacity(isPlaceholder ? 0.1 : 1)
-                .font(.custom("Digital-7", size: 128))
-                .lineLimit(1)
-                .minimumScaleFactor(0.2)
-
+        VStack(alignment: .trailing, spacing: 20) {
             if let previousExpressionDisplayText {
                 Text(previousExpressionDisplayText)
                     .multilineTextAlignment(.trailing)
-                    .opacity(0.45)
-                    .font(.custom("Digital-7", size: 38))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.2)
-                    .offset(y: -82)
+                    .foregroundStyle(.placeholder)
+                    .font(.custom("Digital-7", size: 40))
             }
+
+            Text(activeText)
+                .multilineTextAlignment(.trailing)
+                .foregroundStyle(isPlaceholder ? AnyShapeStyle(.quinary) : AnyShapeStyle(.foreground))
+                .font(.custom("Digital-7", size: 90))
         }
+        .minimumScaleFactor(0.2)
+        .lineLimit(1)
     }
 
     private var previousExpressionDisplayText: String? {
