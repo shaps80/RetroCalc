@@ -21,9 +21,24 @@ public extension LCDPanel {
         }
 
         internal private(set) var entries: [Entry] = []
+        public var isEmpty: Bool { entries.isEmpty }
 
         /// Creates a value initialized to zero.
         public init() {}
+
+        /// Creates a value from already-formatted calculator input text.
+        public init(inputText: String) {
+            entries = inputText.compactMap { character in
+                switch character {
+                case "0"..."9":
+                    return character.wholeNumberValue.map { .digit(UInt8($0)) }
+                case ".":
+                    return .decimalSeparator
+                default:
+                    return nil
+                }
+            }
+        }
 
         /// Appends every digit from an unsigned integer.
         ///
@@ -57,13 +72,17 @@ public extension LCDPanel {
             Decimal(string: text) ?? Decimal(0)
         }
 
+        public mutating func clear() {
+            entries.removeAll()
+        }
+
         internal var firstDigit: Int? {
             guard case let .digit(digit) = entries.first else { return nil }
 
             return Int(digit)
         }
 
-        private var text: String {
+        internal var text: String {
             guard !entries.isEmpty else { return "0" }
 
             return entries.map { entry in
@@ -79,11 +98,7 @@ public extension LCDPanel {
         private mutating func appendDigit(_ digit: UInt8) {
             guard digit <= 9 else { return }
 
-            if entries.isEmpty || entries == [.digit(0)] {
-                entries = digit == 0 ? [.digit(0)] : [.digit(digit)]
-            } else {
-                entries.append(.digit(digit))
-            }
+            entries.append(.digit(digit))
         }
     }
 }

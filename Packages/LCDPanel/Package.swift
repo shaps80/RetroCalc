@@ -6,7 +6,7 @@ let package = Package(
     name: "LCDPanel",
     platforms: [
         .macOS(.v13),
-        .iOS(.v17)
+        .iOS("26.0")
     ],
     products: [
         .library(

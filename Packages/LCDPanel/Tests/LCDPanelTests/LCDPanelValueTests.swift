@@ -38,7 +38,7 @@ final class LCDPanelValueTests: XCTestCase {
         XCTAssertEqual(value.entries, [.digit(1), .digit(2), .digit(3)])
     }
 
-    func testIntegerLeadingZerosCollapse() {
+    func testIntegerLeadingZerosArePreserved() {
         var value = LCDPanel.Value()
 
         value.append(0)
@@ -46,7 +46,16 @@ final class LCDPanelValueTests: XCTestCase {
         value.append(7)
 
         XCTAssertEqual(value.decimal, Decimal(7))
-        XCTAssertEqual(value.entries, [.digit(7)])
+        XCTAssertEqual(value.text, "007")
+        XCTAssertEqual(value.entries, [.digit(0), .digit(0), .digit(7)])
+    }
+
+    func testInputTextInitializerPreservesLeadingZeros() {
+        let value = LCDPanel.Value(inputText: "007")
+
+        XCTAssertEqual(value.decimal, Decimal(7))
+        XCTAssertEqual(value.text, "007")
+        XCTAssertEqual(value.entries, [.digit(0), .digit(0), .digit(7)])
     }
 
     func testAppendDecimalPlacesFollowingDigitsAfterSeparator() {
@@ -56,8 +65,20 @@ final class LCDPanelValueTests: XCTestCase {
         value.appendDecimal()
         value.append(3)
 
+        XCTAssertEqual(value.text, "12.3")
         XCTAssertEqual(value.decimal, Decimal(string: "12.3"))
         XCTAssertEqual(value.entries, [.digit(1), .digit(2), .decimalSeparator, .digit(3)])
+    }
+
+    func testTrailingDecimalIsPreservedInDisplayText() {
+        var value = LCDPanel.Value()
+
+        value.append(6)
+        value.appendDecimal()
+
+        XCTAssertEqual(value.text, "6.")
+        XCTAssertEqual(value.decimal, Decimal(6))
+        XCTAssertEqual(value.entries, [.digit(6), .decimalSeparator])
     }
 
     func testAppendDecimalIsNoOpWhenSeparatorAlreadyExists() {
@@ -79,6 +100,7 @@ final class LCDPanelValueTests: XCTestCase {
         value.append(0)
         value.append(5)
 
+        XCTAssertEqual(value.text, "0.05")
         XCTAssertEqual(value.decimal, Decimal(string: "0.05"))
         XCTAssertEqual(value.entries, [.digit(0), .decimalSeparator, .digit(0), .digit(5)])
     }
