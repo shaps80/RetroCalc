@@ -28,7 +28,7 @@ struct CalculatorView: View {
                     searchText: $wordSearchText,
                     scrollPosition: $wordScrollPosition
                 ) { word in
-                    calculator = CalculatorModel(inputText: word.input)
+                    calculator.replaceActiveInput(with: word.input)
                     isShowingWords = false
                 }
             }

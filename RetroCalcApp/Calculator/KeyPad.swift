@@ -89,7 +89,7 @@ struct KeyPad: View {
             }
 
             GridRow {
-                Key(systemImage: "chevron.down.2") {
+                Key(systemImage: "wand.and.rays") {
                     openWords()
                 }
                 .tint(.secondary)

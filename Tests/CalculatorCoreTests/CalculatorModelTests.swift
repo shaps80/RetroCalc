@@ -122,6 +122,34 @@ struct CalculatorModelTests {
     }
 
     @Test
+    func replacingActiveInputKeepsPreviousExpression() {
+        var calculator = CalculatorModel()
+
+        enter("12+3", into: &calculator)
+        calculator.evaluate()
+        calculator.replaceActiveInput(with: "5307")
+
+        #expect(calculator.activeText == "5307")
+        #expect(calculator.previousExpressionText == "12+3")
+    }
+
+    @Test
+    func replacingActiveInputStartsFreshCalculation() {
+        var calculator = CalculatorModel()
+
+        enter("2+3", into: &calculator)
+        calculator.evaluate()
+        calculator.replaceActiveInput(with: "5307")
+        calculator.enterOperator(.add)
+        calculator.enterDigit(1)
+        calculator.evaluate()
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "5309")
+        #expect(calculator.previousExpressionText == "5308+1")
+    }
+
+    @Test
     func emptyEqualsIsNoOp() {
         var calculator = CalculatorModel()
 

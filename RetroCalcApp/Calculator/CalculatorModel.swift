@@ -29,6 +29,14 @@ public struct CalculatorModel {
         activeText = input.isEmpty ? "0" : input
     }
 
+    public mutating func replaceActiveInput(with inputText: String) {
+        let input = inputText.filter { $0.isNumber || $0 == "." }
+        expression = input
+        activeText = input.isEmpty ? "0" : input
+        hasCompletedEvaluation = false
+        repeatedEqualsOperation = nil
+    }
+
     public mutating func enterDigit(_ digit: UInt8) {
         guard digit <= 9 else { return }
 
