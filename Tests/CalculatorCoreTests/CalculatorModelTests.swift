@@ -14,7 +14,7 @@ struct CalculatorModelTests {
         calculator.enterOperator(.multiply)
         calculator.enterDigit(4)
 
-        #expect(calculator.activeText == "12+3x4")
+        #expect(calculator.activeText == "12+3*4")
         #expect(calculator.previousExpressionText == nil)
     }
 
@@ -22,11 +22,11 @@ struct CalculatorModelTests {
     func equalsEvaluatesUsingMultiplicationPrecedenceAndStoresPreviousExpression() {
         var calculator = CalculatorModel()
 
-        enter("12+3x4", into: &calculator)
+        enter("12+3*4", into: &calculator)
         calculator.evaluate()
 
         #expect(calculator.activeText == "24")
-        #expect(calculator.previousExpressionText == "12+3x4")
+        #expect(calculator.previousExpressionText == "12+3*4")
     }
 
     @Test
@@ -35,11 +35,11 @@ struct CalculatorModelTests {
 
         enter("12+3", into: &calculator)
         calculator.evaluate()
-        enter("x2", into: &calculator)
+        enter("*2", into: &calculator)
         calculator.evaluate()
 
         #expect(calculator.activeText == "30")
-        #expect(calculator.previousExpressionText == "15x2")
+        #expect(calculator.previousExpressionText == "15*2")
     }
 
     @Test
@@ -67,7 +67,7 @@ struct CalculatorModelTests {
         #expect(subtraction.activeText == "2")
 
         var multiplication = CalculatorModel()
-        enter("3x4", into: &multiplication)
+        enter("3*4", into: &multiplication)
         multiplication.evaluate()
         #expect(multiplication.activeText == "12")
         multiplication.evaluate()
@@ -101,12 +101,12 @@ struct CalculatorModelTests {
 
         enter("2+3", into: &calculator)
         calculator.evaluate()
-        enter("x2", into: &calculator)
+        enter("*2", into: &calculator)
         calculator.evaluate()
         calculator.evaluate()
 
         #expect(calculator.activeText == "20")
-        #expect(calculator.previousExpressionText == "10x2")
+        #expect(calculator.previousExpressionText == "10*2")
     }
 
     @Test
@@ -218,7 +218,7 @@ struct CalculatorModelTests {
     func resultFormattingDoesNotIntroduceScientificNotation() {
         var calculator = CalculatorModel()
 
-        enter("1000000000000000x1000", into: &calculator)
+        enter("1000000000000000*1000", into: &calculator)
         calculator.evaluate()
 
         #expect(calculator.activeText == "1000000000000000000")
@@ -228,12 +228,12 @@ struct CalculatorModelTests {
     func minusAfterOperatorStartsNegativeOperandAndEvaluatesProduct() {
         var calculator = CalculatorModel()
 
-        enter("7x-2", into: &calculator)
-        #expect(calculator.activeText == "7x-2")
+        enter("7*-2", into: &calculator)
+        #expect(calculator.activeText == "7*-2")
 
         calculator.evaluate()
         #expect(calculator.activeText == "-14")
-        #expect(calculator.previousExpressionText == "7x-2")
+        #expect(calculator.previousExpressionText == "7*-2")
     }
 
     @Test
@@ -249,16 +249,16 @@ struct CalculatorModelTests {
     func repeatedBinaryOperatorsReplacePreviousOperator() {
         var calculator = CalculatorModel()
 
-        enter("7+x2", into: &calculator)
+        enter("7+*2", into: &calculator)
 
-        #expect(calculator.activeText == "7x2")
+        #expect(calculator.activeText == "7*2")
     }
 
     @Test
     func plusAfterOperatorReplacesOperatorInsteadOfEnteringUnaryPlus() {
         var calculator = CalculatorModel()
 
-        enter("7x+2", into: &calculator)
+        enter("7*+2", into: &calculator)
 
         #expect(calculator.activeText == "7+2")
     }
@@ -276,12 +276,12 @@ struct CalculatorModelTests {
     func plusMinusTogglesCurrentOperandWhileEditing() {
         var calculator = CalculatorModel()
 
-        enter("7x2", into: &calculator)
+        enter("7*2", into: &calculator)
         calculator.toggleSign()
-        #expect(calculator.activeText == "7x-2")
+        #expect(calculator.activeText == "7*-2")
 
         calculator.toggleSign()
-        #expect(calculator.activeText == "7x2")
+        #expect(calculator.activeText == "7*2")
     }
 
     @Test
@@ -299,7 +299,7 @@ struct CalculatorModelTests {
         calculator.enterDigit(2)
         calculator.evaluate()
         #expect(calculator.activeText == "-30")
-        #expect(calculator.previousExpressionText == "-15x2")
+        #expect(calculator.previousExpressionText == "-15*2")
     }
 
     @Test
@@ -368,13 +368,13 @@ struct CalculatorModelTests {
         #expect(calculator.previousExpressionText == "12÷3")
 
         calculator.clear()
-        enter("12x-", into: &calculator)
+        enter("12*-", into: &calculator)
         calculator.removeLast()
         enter("3", into: &calculator)
         calculator.evaluate()
 
         #expect(calculator.activeText == "36")
-        #expect(calculator.previousExpressionText == "12x3")
+        #expect(calculator.previousExpressionText == "12*3")
     }
 
     private func enter(_ text: String, into calculator: inout CalculatorModel) {
@@ -388,7 +388,7 @@ struct CalculatorModelTests {
                 calculator.enterOperator(.add)
             case "-":
                 calculator.enterOperator(.subtract)
-            case "x":
+            case "*":
                 calculator.enterOperator(.multiply)
             case "÷":
                 calculator.enterOperator(.divide)

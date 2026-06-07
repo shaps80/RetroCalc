@@ -253,7 +253,7 @@ private extension CalculatorModel.Operator {
             self = .add
         case "-":
             self = .subtract
-        case "x":
+        case "*":
             self = .multiply
         case "÷":
             self = .divide
@@ -269,7 +269,7 @@ private extension CalculatorModel.Operator {
         case .subtract:
             "-"
         case .multiply:
-            "x"
+            "*"
         case .divide:
             "÷"
         }

@@ -9,7 +9,7 @@ import SwiftUI
 /// value.append(42)
 ///
 /// LCDPanel(value: value)
-///     .font(.custom("Calculator", size: 240))
+///     .font(.custom("Digital-7", size: 240))
 /// ```
 ///
 /// The panel renders the current value directly, allowing the active font to
@@ -54,7 +54,7 @@ public struct LCDPanel: View {
             Text(activeText)
                 .multilineTextAlignment(.trailing)
                 .opacity(isPlaceholder ? 0.1 : 1)
-                .font(.custom("Calculator", size: 128))
+                .font(.custom("Digital-7", size: 128))
                 .lineLimit(1)
                 .minimumScaleFactor(0.2)
 
@@ -62,7 +62,7 @@ public struct LCDPanel: View {
                 Text(previousExpressionDisplayText)
                     .multilineTextAlignment(.trailing)
                     .opacity(0.45)
-                    .font(.custom("Calculator", size: 38))
+                    .font(.custom("Digital-7", size: 38))
                     .lineLimit(1)
                     .minimumScaleFactor(0.2)
                     .offset(y: -82)
