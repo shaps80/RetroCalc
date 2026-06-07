@@ -21,7 +21,7 @@ struct KeyPad: View {
                 }
 
                 Key(systemImage: "plusminus") {
-
+                    calculator.toggleSign()
                 }
 
                 Key(systemImage: "divide") {

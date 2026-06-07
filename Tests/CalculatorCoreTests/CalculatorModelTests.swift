@@ -157,6 +157,84 @@ struct CalculatorModelTests {
         #expect(calculator.activeText == "1000000000000000000")
     }
 
+    @Test
+    func minusAfterOperatorStartsNegativeOperandAndEvaluatesProduct() {
+        var calculator = CalculatorModel()
+
+        enter("7x-2", into: &calculator)
+        #expect(calculator.activeText == "7x-2")
+
+        calculator.evaluate()
+        #expect(calculator.activeText == "-14")
+        #expect(calculator.previousExpressionText == "7x-2")
+    }
+
+    @Test
+    func minusAtExpressionStartEntersNegativeNumber() {
+        var calculator = CalculatorModel()
+
+        enter("-12", into: &calculator)
+
+        #expect(calculator.activeText == "-12")
+    }
+
+    @Test
+    func repeatedBinaryOperatorsReplacePreviousOperator() {
+        var calculator = CalculatorModel()
+
+        enter("7+x2", into: &calculator)
+
+        #expect(calculator.activeText == "7x2")
+    }
+
+    @Test
+    func plusAfterOperatorReplacesOperatorInsteadOfEnteringUnaryPlus() {
+        var calculator = CalculatorModel()
+
+        enter("7x+2", into: &calculator)
+
+        #expect(calculator.activeText == "7+2")
+    }
+
+    @Test
+    func unaryPlusAtExpressionStartIsUnsupported() {
+        var calculator = CalculatorModel()
+
+        enter("+2", into: &calculator)
+
+        #expect(calculator.activeText == "2")
+    }
+
+    @Test
+    func plusMinusTogglesCurrentOperandWhileEditing() {
+        var calculator = CalculatorModel()
+
+        enter("7x2", into: &calculator)
+        calculator.toggleSign()
+        #expect(calculator.activeText == "7x-2")
+
+        calculator.toggleSign()
+        #expect(calculator.activeText == "7x2")
+    }
+
+    @Test
+    func plusMinusTogglesCompletedResultIntoActiveExpression() {
+        var calculator = CalculatorModel()
+
+        enter("12+3", into: &calculator)
+        calculator.evaluate()
+        calculator.toggleSign()
+
+        #expect(calculator.activeText == "-15")
+        #expect(calculator.previousExpressionText == "12+3")
+
+        calculator.enterOperator(.multiply)
+        calculator.enterDigit(2)
+        calculator.evaluate()
+        #expect(calculator.activeText == "-30")
+        #expect(calculator.previousExpressionText == "-15x2")
+    }
+
     private func enter(_ text: String, into calculator: inout CalculatorModel) {
         for character in text {
             switch character {

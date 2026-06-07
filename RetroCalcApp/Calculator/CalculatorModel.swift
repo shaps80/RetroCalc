@@ -54,6 +54,32 @@ public struct CalculatorModel {
         activeText = expression
     }
 
+    public mutating func toggleSign() {
+        if hasCompletedEvaluation {
+            expression = toggledSignText(for: activeText)
+            activeText = expression
+            hasCompletedEvaluation = false
+            return
+        }
+
+        guard !expression.isEmpty else { return }
+
+        let operandRange = currentOperandRange
+        let operand = expression[operandRange]
+
+        if operand.isEmpty {
+            expression.append("-")
+        } else if operand == "-" {
+            expression.removeSubrange(operandRange)
+        } else if operand.hasPrefix("-") {
+            expression.remove(at: operandRange.lowerBound)
+        } else {
+            expression.insert("-", at: operandRange.lowerBound)
+        }
+
+        activeText = expression.isEmpty ? "0" : expression
+    }
+
     public mutating func enterOperator(_ operation: Operator) {
         guard !activeText.isEmpty else { return }
 
@@ -71,8 +97,14 @@ public struct CalculatorModel {
             return
         }
 
-        if let lastOperatorRange, currentOperandText.isEmpty {
-            expression.replaceSubrange(lastOperatorRange, with: operation.displayText)
+        if operation == .subtract && isExpectingOperand {
+            expression.append(operation.displayText)
+            activeText = expression
+            return
+        }
+
+        if let lastBinaryOperatorRange, currentOperandText.isEmpty {
+            expression.replaceSubrange(lastBinaryOperatorRange, with: operation.displayText)
             activeText = expression
             return
         }
@@ -115,11 +147,22 @@ public struct CalculatorModel {
     }
 
     private var currentOperandText: Substring {
-        guard let lastOperatorIndex = expression.lastIndex(where: { Operator(displayText: $0) != nil }) else {
-            return expression[...]
+        expression[currentOperandRange]
+    }
+
+    private var currentOperandRange: Range<String.Index> {
+        var operandStart = expression.startIndex
+        var index = expression.startIndex
+
+        while index < expression.endIndex {
+            if isBinaryOperator(at: index) {
+                operandStart = expression.index(after: index)
+            }
+
+            index = expression.index(after: index)
         }
 
-        return expression[expression.index(after: lastOperatorIndex)...]
+        return operandStart..<expression.endIndex
     }
 
     private var lastOperatorRange: Range<String.Index>? {
@@ -128,6 +171,24 @@ public struct CalculatorModel {
         else { return nil }
 
         return lastIndex..<expression.index(after: lastIndex)
+    }
+
+    private var lastBinaryOperatorRange: Range<String.Index>? {
+        guard let lastOperatorRange else { return nil }
+        return isBinaryOperator(at: lastOperatorRange.lowerBound) ? lastOperatorRange : nil
+    }
+
+    private var isExpectingOperand: Bool {
+        expression.isEmpty || lastBinaryOperatorRange != nil
+    }
+
+    private func isBinaryOperator(at index: String.Index) -> Bool {
+        guard let operation = Operator(displayText: expression[index]) else { return false }
+        guard operation == .subtract else { return true }
+        guard index != expression.startIndex else { return false }
+
+        let previousIndex = expression.index(before: index)
+        return Operator(displayText: expression[previousIndex]) == nil
     }
 }
 
@@ -270,4 +331,12 @@ private func format(_ decimal: Decimal) -> String {
     formatter.maximumFractionDigits = 16
 
     return formatter.string(from: number) ?? number.stringValue
+}
+
+private func toggledSignText(for text: String) -> String {
+    if text.hasPrefix("-") {
+        return String(text.dropFirst())
+    }
+
+    return text == "0" ? text : "-\(text)"
 }
