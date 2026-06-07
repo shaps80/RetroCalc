@@ -16,6 +16,7 @@ struct CalculatorView: View {
             ) {
                 calculator.restorePreviousExpression()
             }
+            .padding(15)
 
             KeyPad(calculator: $calculator)
         }
