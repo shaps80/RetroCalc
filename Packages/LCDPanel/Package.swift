@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "LCDPanel",
     platforms: [
-        .macOS(.v10_15),
+        .macOS(.v13),
         .iOS(.v17)
     ],
     products: [

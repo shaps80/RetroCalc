@@ -8,14 +8,11 @@ struct Digit: View {
     }
 
     var body: some View {
-        GeometryReader { proxy in
-            ZStack {
-                ForEach(Segment.allCases, id: \.self) { segment in
-                    SegmentShape(segment: segment)
-                        .fill(activeSegments.contains(segment) ? activeColor : inactiveColor)
-                }
+        SegmentLayout {
+            ForEach(Segment.allCases, id: \.self) { segment in
+                SegmentView(segment: segment)
+                    .foregroundStyle(activeSegments.contains(segment) ? activeColor : inactiveColor)
             }
-            .frame(width: proxy.size.width, height: proxy.size.height)
         }
     }
 

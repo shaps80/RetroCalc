@@ -6,6 +6,8 @@ struct RetroCalcApp: App {
     var body: some Scene {
         WindowGroup {
             LCDPanel()
+                .frame(height: 300)
+                .scenePadding()
         }
     }
 }
