@@ -16,6 +16,9 @@ public struct CalculatorModel {
 
     private var expression = ""
     private var hasCompletedEvaluation = false
+    private var isUndefined: Bool {
+        activeText == "Undefined"
+    }
 
     public init() {}
 
@@ -82,6 +85,7 @@ public struct CalculatorModel {
 
     public mutating func enterOperator(_ operation: Operator) {
         guard !activeText.isEmpty else { return }
+        guard !isUndefined else { return }
 
         if hasCompletedEvaluation {
             expression = activeText == "0" ? "" : activeText
@@ -118,7 +122,14 @@ public struct CalculatorModel {
         guard let parsedExpression = ParsedExpression(displayText: expression) else { return }
 
         previousExpressionText = parsedExpression.normalizedText
-        activeText = format(parsedExpression.evaluate())
+        guard let result = parsedExpression.evaluate() else {
+            activeText = "Undefined"
+            expression = ""
+            hasCompletedEvaluation = true
+            return
+        }
+
+        activeText = format(result)
         expression = activeText
         hasCompletedEvaluation = true
     }
@@ -284,7 +295,7 @@ private struct ParsedExpression {
         return text
     }
 
-    func evaluate() -> Decimal {
+    func evaluate() -> Decimal? {
         var reducedOperands = [operands[0]]
         var reducedOperators: [CalculatorModel.Operator] = []
 
@@ -295,6 +306,7 @@ private struct ParsedExpression {
             case .multiply:
                 reducedOperands[reducedOperands.count - 1] *= nextOperand
             case .divide:
+                guard nextOperand != 0 else { return nil }
                 reducedOperands[reducedOperands.count - 1] /= nextOperand
             case .add, .subtract:
                 reducedOperators.append(operation)

@@ -235,6 +235,81 @@ struct CalculatorModelTests {
         #expect(calculator.previousExpressionText == "-15x2")
     }
 
+    @Test
+    func divisionByZeroShowsUndefinedAndStoresAttemptedExpression() {
+        var calculator = CalculatorModel()
+
+        enter("0012÷0", into: &calculator)
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "Undefined")
+        #expect(calculator.previousExpressionText == "12÷0")
+    }
+
+    @Test
+    func undefinedIgnoresOperatorsAndRecoversWithFreshDigitOrDecimal() {
+        var calculator = CalculatorModel()
+
+        enter("4÷0", into: &calculator)
+        calculator.evaluate()
+        calculator.enterOperator(.add)
+
+        #expect(calculator.activeText == "Undefined")
+
+        calculator.enterDigit(9)
+        #expect(calculator.activeText == "9")
+        #expect(calculator.previousExpressionText == "4÷0")
+
+        var decimalCalculator = CalculatorModel()
+
+        enter("5÷0", into: &decimalCalculator)
+        decimalCalculator.evaluate()
+        decimalCalculator.enterOperator(.multiply)
+        decimalCalculator.enterDecimal()
+
+        #expect(decimalCalculator.activeText == "0.")
+        #expect(decimalCalculator.previousExpressionText == "5÷0")
+    }
+
+    @Test
+    func clearRemovesActiveValueBeforePreviousExpression() {
+        var calculator = CalculatorModel()
+
+        enter("12+3", into: &calculator)
+        calculator.evaluate()
+        calculator.clear()
+
+        #expect(calculator.activeText == "0")
+        #expect(calculator.previousExpressionText == "12+3")
+
+        calculator.clear()
+
+        #expect(calculator.activeText == "0")
+        #expect(calculator.previousExpressionText == nil)
+    }
+
+    @Test
+    func backspaceCorrectsIncompleteInputBeforeEvaluation() {
+        var calculator = CalculatorModel()
+
+        enter("12÷0", into: &calculator)
+        calculator.removeLast()
+        enter("3", into: &calculator)
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "4")
+        #expect(calculator.previousExpressionText == "12÷3")
+
+        calculator.clear()
+        enter("12x-", into: &calculator)
+        calculator.removeLast()
+        enter("3", into: &calculator)
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "36")
+        #expect(calculator.previousExpressionText == "12x3")
+    }
+
     private func enter(_ text: String, into calculator: inout CalculatorModel) {
         for character in text {
             switch character {
