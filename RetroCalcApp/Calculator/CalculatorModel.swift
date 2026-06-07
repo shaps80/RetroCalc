@@ -16,6 +16,7 @@ public struct CalculatorModel {
 
     private var expression = ""
     private var hasCompletedEvaluation = false
+    private var repeatedEqualsOperation: RepeatOperation?
     private var isUndefined: Bool {
         activeText == "Undefined"
     }
@@ -34,6 +35,7 @@ public struct CalculatorModel {
         if hasCompletedEvaluation {
             expression = ""
             hasCompletedEvaluation = false
+            repeatedEqualsOperation = nil
         }
 
         expression.append(String(digit))
@@ -44,6 +46,7 @@ public struct CalculatorModel {
         if hasCompletedEvaluation {
             expression = ""
             hasCompletedEvaluation = false
+            repeatedEqualsOperation = nil
         }
 
         let operand = currentOperandText
@@ -62,6 +65,7 @@ public struct CalculatorModel {
             expression = toggledSignText(for: activeText)
             activeText = expression
             hasCompletedEvaluation = false
+            repeatedEqualsOperation = nil
             return
         }
 
@@ -118,6 +122,23 @@ public struct CalculatorModel {
     }
 
     public mutating func evaluate() {
+        if hasCompletedEvaluation, let repeatedEqualsOperation {
+            guard let currentValue = Decimal(string: activeText) else { return }
+
+            previousExpressionText = "\(format(currentValue))\(repeatedEqualsOperation.operation.displayText)\(format(repeatedEqualsOperation.operand))"
+
+            guard let result = repeatedEqualsOperation.evaluate(with: currentValue) else {
+                activeText = "Undefined"
+                expression = ""
+                self.repeatedEqualsOperation = nil
+                return
+            }
+
+            activeText = format(result)
+            expression = activeText
+            return
+        }
+
         guard !expression.isEmpty else { return }
         guard let parsedExpression = ParsedExpression(displayText: expression) else { return }
 
@@ -126,12 +147,14 @@ public struct CalculatorModel {
             activeText = "Undefined"
             expression = ""
             hasCompletedEvaluation = true
+            repeatedEqualsOperation = nil
             return
         }
 
         activeText = format(result)
         expression = activeText
         hasCompletedEvaluation = true
+        repeatedEqualsOperation = parsedExpression.repeatedEqualsOperation
     }
 
     public mutating func removeLast() {
@@ -139,6 +162,7 @@ public struct CalculatorModel {
             expression = ""
             activeText = "0"
             hasCompletedEvaluation = false
+            repeatedEqualsOperation = nil
             return
         }
 
@@ -155,6 +179,7 @@ public struct CalculatorModel {
         expression = ""
         activeText = "0"
         hasCompletedEvaluation = false
+        repeatedEqualsOperation = nil
     }
 
     private var currentOperandText: Substring {
@@ -200,6 +225,24 @@ public struct CalculatorModel {
 
         let previousIndex = expression.index(before: index)
         return Operator(displayText: expression[previousIndex]) == nil
+    }
+}
+
+private struct RepeatOperation {
+    let operation: CalculatorModel.Operator
+    let operand: Decimal
+
+    func evaluate(with currentValue: Decimal) -> Decimal? {
+        switch operation {
+        case .add:
+            currentValue + operand
+        case .subtract:
+            currentValue - operand
+        case .multiply:
+            currentValue * operand
+        case .divide:
+            operand == 0 ? nil : currentValue / operand
+        }
     }
 }
 
@@ -293,6 +336,11 @@ private struct ParsedExpression {
         }
 
         return text
+    }
+
+    var repeatedEqualsOperation: RepeatOperation? {
+        guard let operation = operators.last else { return nil }
+        return RepeatOperation(operation: operation, operand: operands[operators.count])
     }
 
     func evaluate() -> Decimal? {

@@ -43,6 +43,73 @@ struct CalculatorModelTests {
     }
 
     @Test
+    func repeatedEqualsRepeatsLastAdditionAgainstCurrentResult() {
+        var calculator = CalculatorModel()
+
+        enter("2+3", into: &calculator)
+        calculator.evaluate()
+        #expect(calculator.activeText == "5")
+
+        calculator.evaluate()
+        #expect(calculator.activeText == "8")
+
+        calculator.evaluate()
+        #expect(calculator.activeText == "11")
+    }
+
+    @Test
+    func repeatedEqualsRepeatsLastOperationForOtherOperators() {
+        var subtraction = CalculatorModel()
+        enter("10-4", into: &subtraction)
+        subtraction.evaluate()
+        #expect(subtraction.activeText == "6")
+        subtraction.evaluate()
+        #expect(subtraction.activeText == "2")
+
+        var multiplication = CalculatorModel()
+        enter("3x4", into: &multiplication)
+        multiplication.evaluate()
+        #expect(multiplication.activeText == "12")
+        multiplication.evaluate()
+        #expect(multiplication.activeText == "48")
+
+        var division = CalculatorModel()
+        enter("20÷2", into: &division)
+        division.evaluate()
+        #expect(division.activeText == "10")
+        division.evaluate()
+        #expect(division.activeText == "5")
+    }
+
+    @Test
+    func digitAfterResultClearsRepeatedEqualsOperationForFreshCalculation() {
+        var calculator = CalculatorModel()
+
+        enter("2+3", into: &calculator)
+        calculator.evaluate()
+        calculator.enterDigit(9)
+        calculator.evaluate()
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "9")
+        #expect(calculator.previousExpressionText == "9")
+    }
+
+    @Test
+    func operatorAfterResultUpdatesRepeatedEqualsOperationAfterNextEvaluation() {
+        var calculator = CalculatorModel()
+
+        enter("2+3", into: &calculator)
+        calculator.evaluate()
+        enter("x2", into: &calculator)
+        calculator.evaluate()
+        calculator.evaluate()
+
+        #expect(calculator.activeText == "20")
+        #expect(calculator.previousExpressionText == "10x2")
+    }
+
+    @Test
     func digitAfterResultStartsFreshExpressionAndKeepsPreviousExpression() {
         var calculator = CalculatorModel()
 
