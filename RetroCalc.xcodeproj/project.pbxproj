@@ -25,7 +25,8 @@
 		2D0000050000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D0000060000000000000001 /* RetroCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetroCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D0000210000000000000001 /* Calculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calculator.ttf; sourceTree = "<group>"; };
-		2D0000310000000000000001 /* words.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
+		2D0000320000000000000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text; name = en; path = en.lproj/words.txt; sourceTree = "<group>"; };
+		2D0000330000000000000001 /* de */ = {isa = PBXFileReference; lastKnownFileType = text; name = de; path = de.lproj/words.txt; sourceTree = "<group>"; };
 		2D0000410000000000000001 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		2D0000430000000000000001 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		2D0000450000000000000001 /* WordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsList.swift; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				de,
 				Base,
 			);
 			mainGroup = 2D0000080000000000000001;
@@ -194,6 +196,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2D0000310000000000000001 /* words.txt */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D0000320000000000000001 /* en */,
+				2D0000330000000000000001 /* de */,
+			);
+			name = words.txt;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		2D0000130000000000000001 /* Debug */ = {

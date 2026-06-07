@@ -46,7 +46,12 @@ struct Word: Identifiable {
 
         var input = ""
 
-        for letter in word.lowercased().reversed() {
+        let normalizedWord = word
+            .lowercased()
+            .replacingOccurrences(of: "ß", with: "ss")
+            .folding(options: [.diacriticInsensitive], locale: .current)
+
+        for letter in normalizedWord.reversed() {
             guard let digit = digitsByLetter[letter] else { return nil }
 
             input.append(digit)
