@@ -16,6 +16,16 @@ struct Key<Content: View>: View {
     }
 }
 
+#Preview {
+    ZStack {
+        Color.bg.ignoresSafeArea()
+        Key("C") { }
+            .tint(.tintYellow)
+            .frame(height: 80)
+            .scenePadding()
+    }
+}
+
 extension Key {
     init(_ value: Int, action: @escaping () -> Void) where Content == Text {
         self.content = Text(value, format: .number)
@@ -82,7 +92,7 @@ private struct CalculatorButtonStyle: ButtonStyle {
         case .dark:
             .white.opacity(isPressed ? 0.01 : 0.03)
         default:
-            .white.opacity(isPressed ? 0.15 : 1)
+            .white.opacity(isPressed ? 0.25 : 1)
         }
     }
 }
